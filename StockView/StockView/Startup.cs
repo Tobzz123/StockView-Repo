@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StockView.Data;
+using StockView.Models;
+using StockView.Models.Forum;
 
 namespace StockView
 {
@@ -27,13 +29,40 @@ namespace StockView
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDbContext<stockviewContext>(options =>
+               options.UseSqlServer(
+              Configuration.GetConnectionString("StockView")));
+
+            services.AddDefaultIdentity<GenericUser>(options => options.SignIn.RequireConfirmedAccount = true)
+               .AddRoles<IdentityRole>()
+              .AddEntityFrameworkStores<stockviewContext>();
+
+         
+
+           // services.AddIdentity<GenericUser, IdentityRole>().AddEntityFrameworkStores<stockviewContext>();
+
+            //Configure Identity
+            services.Configure<IdentityOptions>(options =>
+             {
+                 options.Password.RequiredLength = 8;
+                 options.User.RequireUniqueEmail = true; 
+             });
+
+            //services.AddTransient<IEmailSender, EmailSender>();
+            //services.AddScoped<IForum, ForumService>();
+
+            
+
+            services.AddMvc();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("ManagerRole", policy => policy.RequireRole("Manager"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +83,10 @@ namespace StockView
             app.UseStaticFiles();
 
             app.UseRouting();
-
+          /*  app.UseMvc(routes =>
+            {
+                routes.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+            });*/
             app.UseAuthentication();
             app.UseAuthorization();
 

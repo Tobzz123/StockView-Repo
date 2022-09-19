@@ -1,0 +1,78 @@
+﻿@model StockView.Models.Stocks
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Stocks</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ticker" class="control-label"></label>
+                <input asp-for="Ticker" class="form-control" />
+                <span asp-validation-for="Ticker" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Volume" class="control-label"></label>
+                <input asp-for="Volume" class="form-control" />
+                <span asp-validation-for="Volume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MarketCap" class="control-label"></label>
+                <input asp-for="MarketCap" class="form-control" />
+                <span asp-validation-for="MarketCap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Exchange" class="control-label"></label>
+                <input asp-for="Exchange" class="form-control" />
+                <span asp-validation-for="Exchange" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AverageVolume" class="control-label"></label>
+                <input asp-for="AverageVolume" class="form-control" />
+                <span asp-validation-for="AverageVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DayOpen" class="control-label"></label>
+                <input asp-for="DayOpen" class="form-control" />
+                <span asp-validation-for="DayOpen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DaytClose" class="control-label"></label>
+                <input asp-for="DaytClose" class="form-control" />
+                <span asp-validation-for="DaytClose" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearlyHigh" class="control-label"></label>
+                <input asp-for="YearlyHigh" class="form-control" />
+                <span asp-validation-for="YearlyHigh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearlyLow" class="control-label"></label>
+                <input asp-for="YearlyLow" class="form-control" />
+                <span asp-validation-for="YearlyLow" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
