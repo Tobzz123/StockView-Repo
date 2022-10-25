@@ -34,7 +34,7 @@ namespace StockView.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
 
             [Required]
@@ -44,8 +44,6 @@ namespace StockView.Areas.Identity.Pages.Account.Manage
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-
-            
         }
 
         private async Task LoadAsync(GenericUser user)
@@ -54,7 +52,6 @@ namespace StockView.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var firstName = user.FirstName;
             var lastName = user.LastName;
-            
 
             Username = userName;
 
@@ -102,7 +99,8 @@ namespace StockView.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-            //Update custom properties
+
+            // Update custom properties
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
             await _userManager.UpdateAsync(user);

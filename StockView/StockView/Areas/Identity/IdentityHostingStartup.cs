@@ -17,9 +17,9 @@ namespace StockView.Areas.Identity
         {
             builder.ConfigureServices((context, services) =>
             {
-                services.AddDbContext<stockviewContext>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("StockViewContextConnection")));
+                        context.Configuration.GetConnectionString("StockView")));
 
                
             });

@@ -1,0 +1,72 @@
+﻿@model StockView.Models.GenericUser
+
+@{
+    ViewData["Title"] = "Upgrade Membership";
+}
+
+
+<div id="loginOptionBox" class="text-center">
+
+    <div id="subheading" class="jumbotron text-center">
+        <h1>Upgrade User Benefits</h1>
+
+        <h2>Select a Plan</h2>
+        <h3>Pay securely with PayPal</h3>
+    </div>
+
+    <div style="background-color:black;padding:20px">
+        <h3>Basic</h3>
+        <h4> These are the Basic Membership Benefits</h4>
+        @*  <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-action="Index">Back to List</a>
+            </form>*@
+    </div>
+
+    <div style="background-color:black;padding:20px">
+        <h3>Premium</h3>
+        <h4> These are the Premium Membership Benefits</h4>
+        @*  <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-action="Index">Back to List</a>
+            </form>*@
+    </div>
+
+
+    <!-- Order Details  -->
+    @*<div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+            <div class="h2 text-center" style="border:solid;border-color:dimgrey;margin:20px;padding:60px;">
+                Order Details
+                <div class="h5">Shirt ..... $0.50</div>
+                <div class="h5">Shoes ..... $0.90</div>
+                <div class="h5">Tax ........ $0.15</div>
+                <div class="h5">Shipping ... $0.10</div>
+
+                <span class="h2" style="padding:80px;">Total: $1.65</span>
+
+            </div>
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>*@
+
+
+    <div class="btn" onclick="CallPaypal();">Checkout</div>
+
+    <div class="h5">Make a Test Payment using Latest V2 Checkout</div>
+
+
+
+</div>
+
+<script>
+
+    function CallPaypal() {
+        window.location.href = '@Url.Action("PaypalCheckout")';
+    }
+</script>

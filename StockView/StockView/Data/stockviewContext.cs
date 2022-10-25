@@ -72,9 +72,9 @@ namespace StockView.Data
 
                 entity.Property(e => e.FirstName).IsUnicode(false);
 
-                entity.Property(e => e.GenericUserName).IsUnicode(false);
+               /* entity.Property(e => e.GenericUserName).IsUnicode(false);
 
-                entity.Property(e => e.GenericUserRole).IsUnicode(false);
+                entity.Property(e => e.GenericUserRole).IsUnicode(false);*/
 
                 entity.Property(e => e.LastName).IsUnicode(false);
 

@@ -9,9 +9,9 @@ namespace StockView.Models.Forum
 {
     public class ForumService : IForum
     {
-        private readonly stockviewContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ForumService(stockviewContext context)
+        public ForumService(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -32,7 +32,7 @@ namespace StockView.Models.Forum
 
         public IEnumerable<Forum> GetAll()
         {
-            return _context.Forums.Include(forum => forum.Posts);
+            return null; //_context.Forums.Include(forum => forum.Posts);
         }
 
         public Forum GetForumID(int id)

@@ -30,17 +30,24 @@ namespace StockView
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<stockviewContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(
               Configuration.GetConnectionString("StockView")));
-
             services.AddDefaultIdentity<GenericUser>(options => options.SignIn.RequireConfirmedAccount = true)
-               .AddRoles<IdentityRole>()
-              .AddEntityFrameworkStores<stockviewContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+               /*.AddRoles<IdentityRole>()
+              .AddEntityFrameworkStores<stockviewContext>();*/
 
-         
 
-           // services.AddIdentity<GenericUser, IdentityRole>().AddEntityFrameworkStores<stockviewContext>();
+            /* services.AddDbContext<IdentityDataContext>(options =>
+              options.UseSqlServer(
+             Configuration.GetConnectionString("IdentityDataContext")));*/
+
+
+
+
+            // services.AddIdentity<GenericUser, IdentityRole>().AddEntityFrameworkStores<stockviewContext>();
 
             //Configure Identity
             services.Configure<IdentityOptions>(options =>
@@ -57,7 +64,7 @@ namespace StockView
             services.AddMvc();
             services.AddControllersWithViews();
             services.AddRazorPages();
-
+           /* services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityDataContext>;*/
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminRole", policy => policy.RequireRole("Admin"));
@@ -82,13 +89,18 @@ namespace StockView
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+           
             app.UseRouting();
-          /*  app.UseMvc(routes =>
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+
+           /* app.UseMvc(routes =>
             {
                 routes.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
             });*/
-            app.UseAuthentication();
-            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
