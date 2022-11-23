@@ -9,19 +9,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockView.Models
 {
-    [Table("watchlist")]
-    public partial class Watchlist
+    //[Table("watchlist")]
+    public class Watchlist
     {
         [Key]
-        [Column("watchlist_id")]
+     //   [Column("watchlist_id")]
         public int WatchlistId { get; set; }
-        [Column("watchlist_name")]
-        [StringLength(255)]
+       // [Column("watchlist_name")]
+        //[StringLength(255)]
         public string WatchlistName { get; set; }
-        [Column("generic_user_id")]
+        //[Column("generic_user_id")]
         public string GenericUserId { get; set; }
 
-        [ForeignKey("GenericUserId")]
-        public virtual GenericUser GenericUser { get; set; }
+        public string Ticker { get; set; }
+
+        [Column(TypeName = "decimal(6, 2)")]
+        public double Price { get; set; }
+
+        public string Exchange { get; set; }
+
+       /* [ForeignKey("GenericUserId")]
+        public virtual GenericUser GenericUser { get; set; }*/
     }
 }

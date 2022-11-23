@@ -12,21 +12,103 @@ namespace StockView.Controllers
 {
     public class StocksController : Controller
     {
-        private readonly stockviewContext _context;
+        private readonly StockviewDataContext _context;
+        private readonly ApplicationDbContext _appDbContext;
+        List<Stocks> stocks = new List<Stocks>();
 
-        public StocksController(stockviewContext context)
+        public StocksController(StockviewDataContext context)
         {
             _context = context;
         }
 
         // GET: Stocks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string stockExchange, string stockTicker)
         {
-            return View(await _context.Stocks.ToListAsync());
+            //Using LINQ to get List of all Exchanges
+            IQueryable<string> exchangeQuery = from st in _context.Stocks
+                                               orderby st.Exchange
+                                               select st.Exchange;
+
+            var stocks = from s in _context.Stocks
+                         select s;
+
+            if (!string.IsNullOrEmpty(stockTicker))
+            {
+                stocks = stocks.Where(t => t.Ticker == stockTicker); 
+            }
+
+            if (!string.IsNullOrEmpty(stockExchange))
+            {
+                stocks = stocks.Where(x => x.Exchange == stockExchange);
+            }
+
+            var stockExchangeVM = new StockExchangeViewModel
+            {
+                Exchanges = new SelectList(await exchangeQuery.Distinct().ToListAsync()),
+                Stocks = await stocks.ToListAsync()
+            };
+
+            return View(stockExchangeVM);
         }
 
-        // GET: Stocks/Details/5
-        public async Task<IActionResult> Details(string id)
+       
+        public async Task<IActionResult> Watchlist(string stockTicker, string userId)
+        {
+            
+            var stock = from s in _context.Stocks
+                        where s.Ticker == stockTicker
+                        select s;
+            List<Stocks> tempList = await stock.ToListAsync();
+
+            //ViewBag.UserId;
+            //Insert into watchlist using stock attributes: UserId, Ticker, Price, Exchange
+            
+
+
+            foreach (var item in tempList)
+            {
+                stocks.Add(item);
+                _appDbContext.Database.ExecuteSqlRaw("INSERT INTO Watchlist (generic_user_id, Ticker, Price, Exchange) VALUES(" + userId + ", " + item.Ticker + ", " + item.Price + ", " + item.Exchange);
+            }
+           
+            ViewBag.stocks = stocks;
+            return View();
+        }
+
+        public IActionResult Chart (string stockTicker)
+        {
+            List<StockLineChart> stockList = new List<StockLineChart>();
+            var result = (from s in _context.HistoricalDatas
+                          where s.Ticker == stockTicker
+                          select new { s.Price, s.DateOfClose });
+
+            stockList = result.AsEnumerable()
+                              .Select(sl => new StockLineChart
+                              {
+                                  Price = sl.Price,
+                                  DateOfClose = sl.DateOfClose
+                              }).ToList();
+            return View(Json(new { JSONList = stockList }));
+        }
+
+        public JsonResult GetLineChartJSON(string stockTicker)
+        {
+           List<StockLineChart> stockList = new List<StockLineChart>();
+           var result = (from s in _context.HistoricalDatas
+                          where s.Ticker == stockTicker
+                          select new { s.Price, s.DateOfClose });
+             
+           stockList = result.AsEnumerable()
+                             .Select(sl => new StockLineChart
+                             {
+                                               Price = sl.Price,
+                                               DateOfClose = sl.DateOfClose
+                             }).ToList();
+            return Json(new { JSONList = stockList });
+        }
+
+            // GET: Stocks/Details/5
+            public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -54,7 +136,7 @@ namespace StockView.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Ticker,Price,Volume,MarketCap,Exchange,AverageVolume,DayOpen,DaytClose,YearlyHigh,YearlyLow")] Stocks stocks)
+        public async Task<IActionResult> Create([Bind("Ticker,Price,Volume,MarketCap,Exchange,AverageVolume,DayOpen,DayClose,YearlyHigh,YearlyLow")] Stocks stocks)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +168,7 @@ namespace StockView.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Ticker,Price,Volume,MarketCap,Exchange,AverageVolume,DayOpen,DaytClose,YearlyHigh,YearlyLow")] Stocks stocks)
+        public async Task<IActionResult> Edit(string id, [Bind("Ticker,Price,Volume,MarketCap,Exchange,AverageVolume,DayOpen,DayClose,YearlyHigh,YearlyLow")] Stocks stocks)
         {
             if (id != stocks.Ticker)
             {
@@ -149,5 +231,7 @@ namespace StockView.Controllers
         {
             return _context.Stocks.Any(e => e.Ticker == id); 
         }
+
+       
     }
 }

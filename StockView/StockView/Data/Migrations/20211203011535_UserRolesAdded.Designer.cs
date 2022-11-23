@@ -9,7 +9,7 @@ using StockView.Data;
 
 namespace StockView.Migrations
 {
-    [DbContext(typeof(stockviewContext))]
+    [DbContext(typeof(StockviewDataContext))]
     [Migration("20211203011535_UserRolesAdded")]
     partial class UserRolesAdded
     {
@@ -442,7 +442,7 @@ namespace StockView.Migrations
                         .HasColumnType("decimal(6, 2)")
                         .IsUnicode(false);
 
-                    b.Property<decimal>("DaytClose")
+                    b.Property<decimal>("DayClose")
                         .HasColumnType("decimal(6, 2)")
                         .IsUnicode(false);
 

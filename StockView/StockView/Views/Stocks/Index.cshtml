@@ -1,83 +1,110 @@
-﻿@model IEnumerable<StockView.Models.Stocks>
+﻿@using Microsoft.AspNetCore.Identity
+@model StockView.Models.StockExchangeViewModel
+@inject UserManager<GenericUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
+    var user = await UserManager.GetUserAsync(User);
+    var userID = await UserManager.GetUserIdAsync(user);
+    string UserId = (string)userID;
 }
 
-<h1>Index</h1>
+<h1>Stocks</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Stocks" asp-action="Index" method="get">
+    <p>
+
+        <select asp-for="StockExchange" asp-items="Model.Exchanges">
+            <option value="">All</option>
+        </select>
+
+        Title: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Stocks[0].Ticker)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Volume)
+                @Html.DisplayNameFor(model => model.Stocks[0].Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MarketCap)
+                @Html.DisplayNameFor(model => model.Stocks[0].Volume)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Exchange)
+                @Html.DisplayNameFor(model => model.Stocks[0].MarketCap)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AverageVolume)
+                @Html.DisplayNameFor(model => model.Stocks[0].Exchange)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DayOpen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DaytClose)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearlyHigh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearlyLow)
-            </th>
+            @*   <th>
+                    @Html.DisplayNameFor(model => model.AverageVolume)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DayOpen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DayClose)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.YearlyHigh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.YearlyLow)
+                </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Volume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MarketCap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exchange)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AverageVolume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DayOpen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DaytClose)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearlyHigh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearlyLow)
-            </td>
+        @foreach (var item in Model.Stocks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ticker)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MarketCap)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exchange)
+                </td>
+                @* <td>
+                        @Html.DisplayFor(modelItem => item.AverageVolume)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DayOpen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DayClose)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearlyHigh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearlyLow)
+                    </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Ticker">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Ticker">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Ticker">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Ticker">Delete</a> |
+                <a href="@Url.Action("Watchlist", "Stocks", new { stockTicker = item.Ticker, userId = UserId})">Add To Watchlist</a>
+                <a href="@Url.Action("Chart", "Stocks", new {stockTicker = item.Ticker})">View Chart</a>
+                
             </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

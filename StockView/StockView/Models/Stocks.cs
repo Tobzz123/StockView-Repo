@@ -9,25 +9,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockView.Models
 {
-    [Table("stocks")]
-    public partial class Stocks
+    
+    public class Stocks
     {
         [Key]
-        [StringLength(255)]
         public string Ticker { get; set; }
         [Column(TypeName = "decimal(6, 2)")]
         public decimal Price { get; set; }
         public int Volume { get; set; }
-        [Column("Market_Cap")]
+        
+        //[Column("Market_Cap")]
+        [Display(Name = "Market Cap")]
         public long MarketCap { get; set; }
-        [StringLength(255)]
+        //[StringLength(255)]
         public string Exchange { get; set; }
-        [Column("Average_Volume")]
+        //[Column("Average_Volume")]
         public int AverageVolume { get; set; }
         [Column(TypeName = "decimal(6, 2)")]
         public decimal DayOpen { get; set; }
         [Column(TypeName = "decimal(6, 2)")]
-        public decimal DaytClose { get; set; }
+        public decimal DayClose { get; set; }
         [Column(TypeName = "decimal(6, 2)")]
         public decimal YearlyHigh { get; set; }
         [Column(TypeName = "decimal(6, 2)")]

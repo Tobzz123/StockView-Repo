@@ -79,7 +79,7 @@ namespace StockView.Migrations
                     Exchange = table.Column<string>(unicode: false, maxLength: 255, nullable: true),
                     Average_Volume = table.Column<int>(unicode: false, nullable: false),
                     DayOpen = table.Column<decimal>(type: "decimal(6, 2)", unicode: false, nullable: false),
-                    DaytClose = table.Column<decimal>(type: "decimal(6, 2)", unicode: false, nullable: false),
+                    DayClose = table.Column<decimal>(type: "decimal(6, 2)", unicode: false, nullable: false),
                     YearlyHigh = table.Column<decimal>(type: "decimal(6, 2)", unicode: false, nullable: false),
                     YearlyLow = table.Column<decimal>(type: "decimal(6, 2)", unicode: false, nullable: false)
                 },

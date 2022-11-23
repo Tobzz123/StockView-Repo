@@ -21,17 +21,69 @@ namespace StockView.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+            }catch(Exception ex)
+            {
+                return View("Error",
+            new ErrorViewModel
+            {
+                RequestId = ex.ToString(),
+                Description = "Error." + ex.Message
+            });
+            }
         }
         [Authorize]
         public IActionResult Privacy()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View("Error",
+            new ErrorViewModel
+            {
+                RequestId = ex.ToString(),
+                Description = "Error." + ex.Message
+            });
+            }
         }
 
         public IActionResult About()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View("Error",
+            new ErrorViewModel
+            {
+                RequestId = ex.ToString(),
+                Description = "Error." + ex.Message
+            });
+            }
+        }
+
+        public IActionResult Chat()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View("Error",
+            new ErrorViewModel
+            {
+                RequestId = ex.ToString(),
+                Description = "Error." + ex.Message
+            });
+            }
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

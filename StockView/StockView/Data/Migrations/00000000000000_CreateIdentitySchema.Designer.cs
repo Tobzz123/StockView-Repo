@@ -9,7 +9,7 @@ using StockView.Data;
 
 namespace StockView.Data.Migrations
 {
-    [DbContext(typeof(stockviewContext))]
+    [DbContext(typeof(StockviewDataContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

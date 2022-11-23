@@ -15,20 +15,15 @@ namespace StockView.Models
     {
         public GenericUser()
         {
-            Watchlist = new HashSet<Watchlist>();
+           // Watchlist = new HashSet<Watchlist>();
         }
 
-        //[Column("first_name")]
-        //[StringLength(255)]
+     
         [PersonalData]
-        public string FirstName { get; set; }
-        /* [Column("last_name")]
-         [StringLength(255)]*/
+        public string FirstName { get; set; }  
 
         [PersonalData]
         public string LastName { get; set; }
-        /*   [Column("generic_user_name")]
-           [StringLength(255)]*/
 
         [PersonalData]
         public string DateOfBirth { get; set; }
@@ -41,27 +36,11 @@ namespace StockView.Models
         [PersonalData]
         public string AboutMe { get; set; }
 
-        /* [Key]
-         [Column("generic_user_id")]
-
-         public override string Id { get; set; }*/
-        /* [Column("email")]
-         [StringLength(255)]
-
-         public override string Email { get; set; }
-         [Column("password_hash")]
-
-         [StringLength(255)]
-         public override string PasswordHash { get; set; }*/
-
-        /*   public string GenericUserName { get; set; }
-           [Column("generic_user_role")]
-           [StringLength(255)]
-           public string GenericUserRole { get; set; }*/
+ 
 
 
 
-        [InverseProperty("GenericUser")]
-        public virtual ICollection<Watchlist> Watchlist { get; set; }
+      /*  [InverseProperty("GenericUser")]
+        public virtual ICollection<Watchlist> Watchlist { get; set; }*/
     }
 }

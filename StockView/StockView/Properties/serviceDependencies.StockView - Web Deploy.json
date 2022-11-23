@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql3": {
+      "resourceId": null,
+      "type": "mssql.onprem",
+      "connectionId": "StockView",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.WatchlistName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GenericUser)
+                @Html.DisplayNameFor(model => model.GenericUserId)
             </th>
             <th></th>
         </tr>
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.WatchlistName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GenericUser.Id)
+                @Html.DisplayFor(modelItem => item.GenericUserId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.WatchlistId">Edit</a> |

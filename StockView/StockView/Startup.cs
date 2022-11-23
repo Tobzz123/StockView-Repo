@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using StockView.Data;
 using StockView.Models;
 using StockView.Models.Forum;
+using Stripe;
+using StockView.Hubs;
 
 namespace StockView
 {
@@ -22,6 +24,7 @@ namespace StockView
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            StripeConfiguration.ApiKey = configuration.GetValue<string>("Stripe:SecretKey");
         }
 
         public IConfiguration Configuration { get; }
@@ -33,6 +36,9 @@ namespace StockView
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(
               Configuration.GetConnectionString("StockView")));
+            services.AddDbContext<StockviewDataContext>(options =>
+              options.UseSqlServer(
+             Configuration.GetConnectionString("StockView")));
             services.AddDefaultIdentity<GenericUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -64,6 +70,7 @@ namespace StockView
             services.AddMvc();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
            /* services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityDataContext>;*/
             services.AddAuthorization(options =>
             {
@@ -104,10 +111,12 @@ namespace StockView
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                
             });
         }
     }

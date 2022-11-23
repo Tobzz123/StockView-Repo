@@ -1,0 +1,58 @@
+﻿@model StockView.Models.StockExchangeViewModel
+
+@{
+    ViewData["Title"] = "Watchlist";
+    var stocks = ViewBag.stocks;
+   
+}
+
+<h1>Watchlist</h1>
+
+<p>
+    <a asp-action="Index">Add to Watchlist</a>
+</p>
+
+<form asp-controller="Stocks" asp-action="Index" method="get">
+    <p>
+
+        Stock to Add: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Stocks[0].Ticker)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stocks[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stocks[0].Exchange)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.stocks)
+        {
+            <tr>
+                <td>
+                    @item[0]
+                </td>
+                <td>
+                    @item[1]
+                </td>
+                <td>
+                    @item[4]
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Ticker">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Ticker">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Ticker">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

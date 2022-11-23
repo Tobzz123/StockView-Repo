@@ -5,16 +5,58 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        //User
         var user = await UserManager.GetUserAsync(User);
-        var firstName = user.FirstName;
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @firstName</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
+        var userRoles = await UserManager.GetRolesAsync(user);
+        List<string> uRoles = (List<string>)userRoles;
+        @if (uRoles.Contains("Admin"))
+        {
+
+            var firstName = user.FirstName;
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @firstName</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Checkout" asp-action="Upgrade">Manage Users</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </li>
+        }
+        else if (uRoles.Contains("Manager"))
+        {
+
+            var firstName = user.FirstName;
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @firstName</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Checkout" asp-action="Upgrade">Manage Sites</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </li>
+        }
+        else if (uRoles.Contains("Premium"))
+        {
+
+            var firstName = user.FirstName;
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @firstName</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Checkout" asp-action="Upgrade">Downgrade Membership</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </li>
+        }
     }
     else
     {

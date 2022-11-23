@@ -11,12 +11,13 @@ using StockView.Models;
 
 namespace StockView.Controllers
 {
-    [Authorize(Roles = "ManagerRole")]
+    [Authorize(Roles = "Manager")]
+   
     public class ManagersController : Controller
     {
-        private readonly stockviewContext _context;
+        private readonly StockviewDataContext _context;
 
-        public ManagersController(stockviewContext context)
+        public ManagersController(StockviewDataContext context)
         {
             _context = context;
         }
@@ -24,7 +25,8 @@ namespace StockView.Controllers
         // GET: Managers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Manager.ToListAsync());
+            // return View(await _context.Manager.ToListAsync());
+            return View();
         }
 
         // GET: Managers/Details/5
@@ -35,14 +37,14 @@ namespace StockView.Controllers
                 return NotFound();
             }
 
-            var manager = await _context.Manager
+           /* var manager = await _context.Manager
                 .FirstOrDefaultAsync(m => m.ManagerId == id);
             if (manager == null)
             {
                 return NotFound();
             }
-
-            return View(manager);
+*/
+            return View();
         }
 
         // GET: Managers/Create
@@ -75,12 +77,12 @@ namespace StockView.Controllers
                 return NotFound();
             }
 
-            var manager = await _context.Manager.FindAsync(id);
+           /* var manager = await _context.Manager.FindAsync(id);
             if (manager == null)
             {
                 return NotFound();
-            }
-            return View(manager);
+            }*/
+            return View();
         }
 
         // POST: Managers/Edit/5
@@ -104,14 +106,14 @@ namespace StockView.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ManagerExists(manager.ManagerId))
+                  /*  if (!ManagerExists(manager.ManagerId))
                     {
                         return NotFound();
                     }
                     else
                     {
                         throw;
-                    }
+                    }*/
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -126,12 +128,12 @@ namespace StockView.Controllers
                 return NotFound();
             }
 
-            var manager = await _context.Manager
+          /*  var manager = await _context.Manager
                 .FirstOrDefaultAsync(m => m.ManagerId == id);
             if (manager == null)
             {
                 return NotFound();
-            }
+            }*/
 
             return View(/*manager*/);
         }
@@ -141,15 +143,15 @@ namespace StockView.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var manager = await _context.Manager.FindAsync(id);
+         /*   var manager = await _context.Manager.FindAsync(id);
             _context.Manager.Remove(manager);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();*/
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ManagerExists(int id)
+       /* private bool ManagerExists(int id)
         {
             return _context.Manager.Any(e => e.ManagerId == id); 
-        }
+        }*/
     }
 }

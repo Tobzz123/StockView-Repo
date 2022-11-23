@@ -11,62 +11,61 @@
         <h1>Upgrade User Benefits</h1>
 
         <h2>Select a Plan</h2>
-        <h3>Pay securely with PayPal</h3>
-    </div>
+        <h3>Pay securely with Stripe</h3>
 
-    <div style="background-color:black;padding:20px">
-        <h3>Basic</h3>
-        <h4> These are the Basic Membership Benefits</h4>
-        @*  <form asp-action="Delete">
-                <input type="hidden" asp-for="Id" />
+
+        <div style="background-color:white;padding:20px">
+            <h3>Basic</h3>
+            <h4> These are the Basic Membership Benefits</h4>
+            <ul>
+                <li>Create a Watchlist</li>
+                <li>Add stocks to watchlist</li>
+                <li>Edit or Delete watchlist</li>
+                <li>Update Watchlist</li>
+            </ul>
+               @* <input type="hidden" asp-for="Id" />
                 <input type="submit" value="Delete" class="btn btn-danger" /> |
-                <a asp-action="Index">Back to List</a>
-            </form>*@
-    </div>
-
-    <div style="background-color:black;padding:20px">
-        <h3>Premium</h3>
-        <h4> These are the Premium Membership Benefits</h4>
-        @*  <form asp-action="Delete">
-                <input type="hidden" asp-for="Id" />
-                <input type="submit" value="Delete" class="btn btn-danger" /> |
-                <a asp-action="Index">Back to List</a>
-            </form>*@
-    </div>
-
-
-    <!-- Order Details  -->
-    @*<div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-
-            <div class="h2 text-center" style="border:solid;border-color:dimgrey;margin:20px;padding:60px;">
-                Order Details
-                <div class="h5">Shirt ..... $0.50</div>
-                <div class="h5">Shoes ..... $0.90</div>
-                <div class="h5">Tax ........ $0.15</div>
-                <div class="h5">Shipping ... $0.10</div>
-
-                <span class="h2" style="padding:80px;">Total: $1.65</span>
-
-            </div>
-
+                <a asp-action="Index">Back to List</a>*@
+            
         </div>
-        <div class="col-md-2"></div>
-    </div>*@
+
+        <div style="background-color:white;padding:20px">
+            <h3>Premium</h3>
+            <h4> These are the Premium Membership Benefits</h4>
+            <ul>
+                <li>Create a Watchlist</li>
+                <li>Add stocks to watchlist</li>
+                <li>Edit or Delete watchlist</li>
+                <li>Update Watchlist</li>
+                <li>Edit account details</li>
+                <li>Create Forum Posts</li>
+            </ul>
+            
+            @*  <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>*@
+        </div>
+
+        <form id="payment-form" method="post" asp-controller="GenericUsers" asp-action="Create">
+            <script src="https://checkout.stripe.com/checkout.js" 
+                    class="stripe-button" 
+                    data-key="pk_test_51Lzu8OEmpCsp93BbBV7LE8V57PZXkPtv9TdhK9VdueqibDroS73vSEA29osq2An6Vm1BHSqAFZwNPB76MImYCQYM0097UKlODa"
+                    data-name="StockView Premium Membership Payment"
+                    data-description="Stripe Gateway"
+                    data-locale="en"
+                    data-label="Confirm Payment - $39.99"
+                    >
+            </script>
+        </form>
+
+  
 
 
-    <div class="btn" onclick="CallPaypal();">Checkout</div>
+      
 
-    <div class="h5">Make a Test Payment using Latest V2 Checkout</div>
-
-
+    </div>
 
 </div>
 
-<script>
-
-    function CallPaypal() {
-        window.location.href = '@Url.Action("PaypalCheckout")';
-    }
-</script>

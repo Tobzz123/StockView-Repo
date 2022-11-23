@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Chart";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chartdiv" style="width:600px;height:350px">
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+        function drawChart() {
+            $(function) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Stocks/Chart',
+                    success: function (chartsdata) {
+                        var Data = chartsdata.jsonList;
+                        // Create the data table.
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('number', 'Price');
+                        data.addColumn('string', 'DateOfClose');
+
+                        for (var i = 0; i < Data.length; i++) {
+                            data.addRow([Data[i].price, Data[i].dateOfClose]);
+                        }
+
+                        // Set chart options
+                        var options = {
+                            'title': 'Stock Chart for Apple Inc',
+                            'width': 600,
+                            'height': 500
+                        };
+
+                        // Instantiate and draw our chart, passing in some options.
+                        var chart = new google.visualization.LineChart(document.getElementById('chart'));
+                        chart.draw(data, options);
+                    },
+                        error: function () {
+                            alert('Error loading data! Please try again.')
+                        }
+                    })
+                });
+            }
+        
+    </script>
+}

@@ -11,13 +11,14 @@ using StockView.Models;
 
 namespace StockView.Controllers
 {
-    [Authorize(Roles = "AdminRole")]
+    [Authorize(Roles = "Admin")]
     public class AdminsController : Controller
     {
-        private readonly stockviewContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly StockviewDataContext _stockviewcontext;
 
 
-        public AdminsController(stockviewContext context)
+        public AdminsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -28,6 +29,25 @@ namespace StockView.Controllers
            return null; // View(await _context.Admins.ToListAsync());
         }
 
+        public IActionResult UpdateUserWatchlist(Guid id)
+        {
+            return View();
+        }
+
+        
+        public IActionResult GetUserId(string email)
+        {
+            var userId = from u in _context.Users
+                         where u.Email == email
+                         select u.Id;
+            return View();
+        }
+
+        //Deletes user's watchlist with ID email
+        public IActionResult DeleteUserWatchlist(string email)
+        {
+            return View();
+        }
         // GET: Admins/Details/5
         /*  public async Task<IActionResult> Details(int? id)
           {
