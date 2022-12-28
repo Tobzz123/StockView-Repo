@@ -1,0 +1,13 @@
+﻿
+@using (Html.BeginForm("Chart", "Stocks", FormMethod.Get))
+{
+    <table>
+        <tr>
+            <td>Enter a Ticker to pull up its chart: </td>
+            <td>@Html.TextBox("stockTicker")</td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Submit"></td>
+        </tr>
+    </table>
+}

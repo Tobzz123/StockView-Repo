@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockView.Models
 {
+    //DELETE THIS MODEL, NO ADMINS TABLE
     [Table("admins")]
     public partial class Admins
     {

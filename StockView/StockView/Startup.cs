@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StockView.Data;
 using StockView.Models;
-using StockView.Models.Forum;
+
 using Stripe;
 using StockView.Hubs;
 
@@ -65,7 +65,7 @@ namespace StockView
             //services.AddTransient<IEmailSender, EmailSender>();
             //services.AddScoped<IForum, ForumService>();
 
-            
+            //services.AddScoped
 
             services.AddMvc();
             services.AddControllersWithViews();

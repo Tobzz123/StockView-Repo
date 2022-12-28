@@ -17,15 +17,29 @@ using Stripe;
 
 namespace StockView.Controllers
 {
+    [Authorize]
     public class GenericUsersController : Controller
     {
         private readonly StockviewDataContext _context;
         private readonly ApplicationDbContext _appDbContext;
 
-
+        //Initial page for user when they log in. Links to Chart, Stocklist, Watchlist
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View("Error",
+                new ErrorViewModel
+                {
+                    RequestId = ex.ToString(),
+                    Description = "Error." + ex.Message
+                });
+               
+            }
         }
         public GenericUsersController(StockviewDataContext context)
         {
@@ -35,6 +49,9 @@ namespace StockView.Controllers
       
 
         // GET: GenericUsers/Create
+        /**
+         * This method represents a user buying a membership 
+         */
         public IActionResult Create(string stripeToken)
         {
             var chargeOptions = new ChargeCreateOptions()
@@ -71,6 +88,9 @@ namespace StockView.Controllers
             return View(genericUser);
         }
 
+        /**
+         * This action method represents loading the plans so that a user can have an ongoing subscription to a Premium membership
+         */
        public IActionResult LoadPlans()
         {
             var service = new PlanService();
@@ -79,11 +99,14 @@ namespace StockView.Controllers
             return View(allPlans);
         }
 
+
         public IActionResult Upgrade()
         {
             return View();
         }
 
+        //Defines the logic that allows a user to Subscribe to a Plan
+        
         public IActionResult SubscribeToPlan(string id)
         {
             var subscriptionOptions = new SubscriptionCreateOptions
@@ -108,6 +131,7 @@ namespace StockView.Controllers
             return View("NotSubscribed");
         }
 
+        //This method is meant to toggle a user between regular and premium
         public string SubscriptionChange(string email)
         {
             string result;
@@ -128,6 +152,7 @@ namespace StockView.Controllers
                 {
                     _appDbContext.Database.ExecuteSqlRaw("INSERT INTO AspNetUserRoles VALUES((SELECT Id FROM AspNetUsers WHERE UserName =" + email + ")," +
                         "(SELECT Id FROM AspNetRoles WHERE[Name] = 'Premium') ");
+
                     result = "Upgraded to Premium";
                 }
                 else

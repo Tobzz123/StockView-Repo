@@ -9,9 +9,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockView.Models
 {
+
     [Table("manager")]
     public partial class Manager
     {
+        //MANAGER MODEL SHOULD BE DELETED, NO NEED FOR THIS MODEL AS THERE IS NO MANAGER TABLE
         [Key]
         [Column("manager_id")]
         public int ManagerId { get; set; }

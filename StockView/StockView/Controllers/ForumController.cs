@@ -9,6 +9,7 @@ namespace StockView.Controllers
 {
     public class ForumController : Controller
     {
+        //We're gonna have to delete this controller aren't we?
         private readonly IForum _forumService;
 
         public ForumController(IForum forumService)

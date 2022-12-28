@@ -13,25 +13,28 @@ namespace StockView.Models
     public class Stocks
     {
         [Key]
+        [Column("Ticker")]
         public string Ticker { get; set; }
-        [Column(TypeName = "decimal(6, 2)")]
+        [Column("Price", TypeName = "decimal(6, 2)")]
         public decimal Price { get; set; }
+        [Column("Volume")]
         public int Volume { get; set; }
         
-        //[Column("Market_Cap")]
+        [Column("MarketCap")]
         [Display(Name = "Market Cap")]
         public long MarketCap { get; set; }
-        //[StringLength(255)]
+        [Column("Exchange")]
+        [StringLength(255)]
         public string Exchange { get; set; }
-        //[Column("Average_Volume")]
+        [Column("AverageVolume")]
         public int AverageVolume { get; set; }
-        [Column(TypeName = "decimal(6, 2)")]
+        [Column("DayOpen", TypeName = "decimal(6, 2)")]
         public decimal DayOpen { get; set; }
-        [Column(TypeName = "decimal(6, 2)")]
+        [Column("DayClose", TypeName = "decimal(6, 2)")]
         public decimal DayClose { get; set; }
-        [Column(TypeName = "decimal(6, 2)")]
+        [Column("YearlyHigh", TypeName = "decimal(6, 2)")]
         public decimal YearlyHigh { get; set; }
-        [Column(TypeName = "decimal(6, 2)")]
+        [Column("YearlyLow", TypeName = "decimal(6, 2)")]
         public decimal YearlyLow { get; set; }
     }
 }

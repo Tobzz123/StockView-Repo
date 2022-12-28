@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using StockView.Models;
-using StockView.Models.Forum;
+
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -27,9 +27,7 @@ namespace StockView.Data
        
       
 
-      /*  public virtual DbSet<Forum> Forums { get; set; }
-        public virtual DbSet<Post> Posts { get; set; }
-        public virtual DbSet<ReplyPost> ReplyPosts { get; set; }*/
+      
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -38,12 +36,14 @@ namespace StockView.Data
             {
                 optionsBuilder.UseSqlServer("name=stockview");
             }
+
         }
 
-       /* protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
-            modelBuilder.Entity<Stocks>(entity =>
+            //modelBuilder.Entity<HistoricalData>().HasKey(e => e.Ticker);
+            //modelBuilder.Entity<HistoricalData>().HasNoKey();
+           /* modelBuilder.Entity<Stocks>(entity =>
             {
                 entity.HasKey(e => e.Ticker)
                     .HasName("PK__stocks__42AC12F161829BE6");
@@ -91,15 +91,15 @@ namespace StockView.Data
 
                 entity.Property(e => e.WatchlistName).IsUnicode(false);
 
-              *//*  entity.HasOne(d => d.GenericUser)
+                entity.HasOne(d => d.GenericUser)
                     .WithMany(p => p.Watchlist)
                     .HasForeignKey(d => d.GenericUserId)
-                    .HasConstraintName("FK__watchlist__gener__267ABA7A");*//*
+                    .HasConstraintName("FK__watchlist__gener__267ABA7A");
             });
 
-            base.OnModelCreating(modelBuilder);
-        }*/
+            base.OnModelCreating(modelBuilder);*/
+        }
 
-       
+
     }
 }

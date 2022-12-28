@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockView.Models
 {
+    //DELETE THIS MODEL, NO NEED FOR IT ANYMORE
     [Table("usage_data")]
     public partial class UsageData
     {

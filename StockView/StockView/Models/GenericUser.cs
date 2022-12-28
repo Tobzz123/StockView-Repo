@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace StockView.Models
 {
+    //No Table for Generic Users as it Piggybacks off of Identity User's AspNetUsers Table
     //[Table("generic_user")]
     public class GenericUser : IdentityUser
     {
